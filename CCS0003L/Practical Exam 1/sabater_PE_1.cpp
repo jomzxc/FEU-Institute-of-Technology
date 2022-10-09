@@ -25,14 +25,16 @@ int main()
     double sheqel = php * SHEQEL;
     double dinar = php * DINAR;
 
+    cout << fixed << setprecision(3);
     cout << "The amount's equivalent to:" << endl;
     cout << "US Dollar is" << string(1, '\t') << ':' << string(1, '\t') << usd << endl;
-    cout << "Euro" << string(2, '\t') << ':' << string(1, '\t') << ("%.6f", euro) << endl;
-    cout << "Yuan" << string(2, '\t') << ':' << string(1, '\t') << ("%.6f", yuan) << endl;
-    cout << "Koruna" << string(2, '\t') << ':' << string(1, '\t') << ("%.6f", koruna) << endl;
-    cout << "Krone" << string(2, '\t') << ':' << string(1, '\t') << ("%.6f", krone) << endl;
-    cout << "Sheqel" << string(2, '\t') << ':' << string(1, '\t') << ("%.6f", sheqel) << endl;
-    cout << "Dinar" << string(2, '\t') << ':' << string(1, '\t') << ("%.6f", dinar) << endl;
+    cout << defaultfloat << setprecision(7);
+    cout << "Euro" << string(2, '\t') << ':' << string(1, '\t') << euro << endl;
+    cout << "Yuan" << string(2, '\t') << ':' << string(1, '\t') << yuan << endl;
+    cout << "Koruna" << string(2, '\t') << ':' << string(1, '\t') << koruna << endl;
+    cout << "Krone" << string(2, '\t') << ':' << string(1, '\t') << krone << endl;
+    cout << "Sheqel" << string(2, '\t') << ':' << string(1, '\t') << sheqel << endl;
+    cout << "Dinar" << string(2, '\t') << ':' << string(1, '\t') << dinar << endl;
 
     return 0;
 }
