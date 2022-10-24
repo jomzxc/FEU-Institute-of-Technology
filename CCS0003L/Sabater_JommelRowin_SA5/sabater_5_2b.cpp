@@ -44,7 +44,7 @@ string get_horoscope(int month, int day) {
 
     switch (month) {
         case 1:
-            return ((day <= 19) ? "Caapricorn" : "Aquarius");
+            return ((day <= 19) ? "Capricorn" : "Aquarius");
         case 2:
             return ((day <= 18) ? "Aquarius" : "Pisces");
         case 3:
