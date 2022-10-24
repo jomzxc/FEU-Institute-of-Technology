@@ -44,7 +44,7 @@ void is_valid_input(int placeholder, int day) {
 string get_horoscope(int month, int day) {
 
     if (month == 1) {
-        return ((day <= 19) ? "Caapricorn" : "Aquarius");
+        return ((day <= 19) ? "Capricorn" : "Aquarius");
     }
     else if (month == 2) {
         return ((day <= 18) ? "Aquarius" : "Pisces");
