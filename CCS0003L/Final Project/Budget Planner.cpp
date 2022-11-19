@@ -211,16 +211,6 @@ int selectAccount(AccountClass*& user, std::vector<AccountClass*>& AccountVector
     }
 
     return 0;
-    /*
-    for (auto account : AccountVector) {
-        if ((user->username == account->username) && (user->password == account->password)) {
-            user->username = account->username;
-            user->password = account->password;
-            user->BudgetVector = account->BudgetVector;
-            return true;
-        }
-    }
-    */
 }
 
 void budgetMenu(AccountClass*& user, std::vector<AccountClass*>& AccountVector) {
