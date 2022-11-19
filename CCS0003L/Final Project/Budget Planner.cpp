@@ -86,7 +86,6 @@ int main()
             pause();
             break;
         case '3':
-
             cout << "Thank you for using XYZ Budget Planner!\n";
             exit(EXIT_SUCCESS);
         default:
@@ -246,6 +245,8 @@ void budgetMenu(AccountClass*& user, std::vector<AccountClass*>& AccountVector) 
             cout << "Signing out...\n";
             return;
         case '4':
+            cout << "Thank you for using XYZ Budget Planner!\n";
+            exit(EXIT_SUCCESS);
         default:
             cerr << "Error... Invalid Action. Try Again!\n" << flush;
             pause();
@@ -384,7 +385,7 @@ void displayExpense(vector<ExpenseClass*> user_ExpenseVector) {
 
     while (true) {
         if (_getch() == '0') {
-            cout << "\nGoing back...\n";
+            cout << "Going back...\n";
             break;
         }
     }
