@@ -306,7 +306,7 @@ void expenseMenu(int index, BudgetClass*& userBudget, vector<BudgetClass*> user_
         system("CLS");
 
         cout << "BUDGET: " << userBudget->budget_name << "\n";
-        cout << "Remaining Balance: " << userBudget->current_balance() << "\n\n";
+        cout << "Remaining Balance: " << CURRENCY << userBudget->current_balance() << "\n\n";
         cout << "Press the number of the action you want to do.\n\n";
         cout << "[1] Add Expense\n";
         cout << "[2] Open Expense\n";
@@ -329,7 +329,7 @@ void expenseMenu(int index, BudgetClass*& userBudget, vector<BudgetClass*> user_
             system("CLS");
 
             cout << "EDIT BUDGETED AMOUNT\n\n";
-            cout << "New Budgeted Amount: ";
+            cout << "New Budgeted Amount: " << CURRENCY;
             cin >> userBudget->budgeted_amount;
             cout << "\nBudgeted amount changed successfully!\n\n";
             pause();
@@ -353,7 +353,7 @@ void addExpense(vector<ExpenseClass*>& user_ExpenseVector) {
     cout << "ADD EXPENSE\n\n";
     cout << "Description: ";
     getline(cin >> ws, placeholder->description);
-    cout << "Amount: ";
+    cout << "Amount: " << CURRENCY;
     cin >> placeholder->amount;
 
     for (auto expense : user_ExpenseVector) {
@@ -377,7 +377,7 @@ void displayExpense(vector<ExpenseClass*> user_ExpenseVector) {
 
     int counter = 0;
     for (auto expense : user_ExpenseVector) {
-        cout << "-> " << expense->description << " : " << expense->amount << "\n";
+        cout << "-> " << expense->description << " : " << CURRENCY << expense->amount << "\n";
     }
 
     cout << "[0] Go back.\n\n";
