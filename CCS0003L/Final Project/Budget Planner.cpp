@@ -54,7 +54,6 @@ bool selectAccount(AccountClass*& user, std::vector<AccountClass*>& AccountVecto
 void budgetMenu(AccountClass*& user, std::vector<AccountClass*>& AccountVector);
 void addBudget(vector<BudgetClass*>& user_BudgetVector);
 bool displaySelectBudget(vector<BudgetClass*>& user_BudgetVector);
-void openBudget(int index, BudgetClass*& userBudget, vector<BudgetClass*> user_BudgetVector);
 
 void expenseMenu(int index, BudgetClass*& userBudget, vector<BudgetClass*> user_BudgetVector);
 void addExpense(vector<ExpenseClass*>& user_ExpenseVector);
