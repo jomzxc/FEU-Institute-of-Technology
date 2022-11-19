@@ -221,7 +221,6 @@ int selectAccount(AccountClass*& user, std::vector<AccountClass*>& AccountVector
         }
     }
     */
-    return false;
 }
 
 void budgetMenu(AccountClass*& user, std::vector<AccountClass*>& AccountVector) {
