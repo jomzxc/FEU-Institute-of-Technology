@@ -53,7 +53,7 @@ bool selectAccount(AccountClass*& user, std::vector<AccountClass*>& AccountVecto
 
 void budgetMenu(AccountClass*& user, std::vector<AccountClass*>& AccountVector);
 void addBudget(vector<BudgetClass*>& user_BudgetVector);
-bool displaySelectBudget(vector<BudgetClass*>& user_BudgetVector);
+int displaySelectBudget(vector<BudgetClass*>& user_BudgetVector);
 
 void expenseMenu(int index, BudgetClass*& userBudget, vector<BudgetClass*> user_BudgetVector);
 void addExpense(vector<ExpenseClass*>& user_ExpenseVector);
@@ -278,7 +278,7 @@ void addBudget(vector<BudgetClass*>& user_BudgetVector) {
     return;
 }
 
-bool displaySelectBudget(vector<BudgetClass*>& user_BudgetVector) {
+int displaySelectBudget(vector<BudgetClass*>& user_BudgetVector) {
     system("CLS");
 
     int n = 0, selected_budget = 0;
@@ -295,7 +295,7 @@ bool displaySelectBudget(vector<BudgetClass*>& user_BudgetVector) {
 
     if (selected_budget == 0) {
         cout << "\nGoing back...\n";
-        return false;
+        return 0;
     }
     
     return selected_budget;
