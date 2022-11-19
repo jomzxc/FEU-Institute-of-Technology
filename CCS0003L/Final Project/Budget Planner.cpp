@@ -374,7 +374,7 @@ void displayExpense(vector<ExpenseClass*> user_ExpenseVector) {
 
     int counter = 0;
     for (auto expense : user_ExpenseVector) {
-        cout << "-> " << ++counter << expense->description << " : " << expense->amount << "\n";
+        cout << "-> " << expense->description << " : " << expense->amount << "\n";
     }
 
     cout << "[0] Go back.\n\n";
