@@ -49,7 +49,7 @@ bool isUsernameExists(string new_user, vector<AccountClass*> AccountVector);
 bool isValidPassword(string password);
 
 void loginMenu(vector<AccountClass*>& AccountVector);
-bool selectAccount(AccountClass*& user, std::vector<AccountClass*>& AccountVector);
+int selectAccount(AccountClass*& user, std::vector<AccountClass*>& AccountVector);
 
 void budgetMenu(AccountClass*& user, std::vector<AccountClass*>& AccountVector);
 void addBudget(vector<BudgetClass*>& user_BudgetVector);
@@ -189,7 +189,8 @@ void loginMenu(vector<AccountClass*>& AccountVector) {
     cout << "Password: ";
     cin >> user->password;
 
-    if (!selectAccount(user, AccountVector)) {
+    int index = selectAccount(user, AccountVector);
+    if (!index) {
         std::cerr << "\nError... Invalid username or password!\n" << std::flush;
         return;
     }
@@ -197,12 +198,20 @@ void loginMenu(vector<AccountClass*>& AccountVector) {
     std::cout << "\nLogging in...\n";
     pause();
 
-    budgetMenu(user, AccountVector);
+    budgetMenu(AccountVector[index-1], AccountVector);
 
     return;
 }
 
-bool selectAccount(AccountClass*& user, std::vector<AccountClass*>& AccountVector) {
+int selectAccount(AccountClass*& user, std::vector<AccountClass*>& AccountVector) {
+    for (int i = 0; i < AccountVector.size(); i++) {
+        if (AccountVector[i]->username == user->username) {
+            return i + 1;
+        }
+    }
+
+    return 0;
+    /*
     for (auto account : AccountVector) {
         if ((user->username == account->username) && (user->password == account->password)) {
             user->username = account->username;
@@ -211,6 +220,7 @@ bool selectAccount(AccountClass*& user, std::vector<AccountClass*>& AccountVecto
             return true;
         }
     }
+    */
     return false;
 }
 
