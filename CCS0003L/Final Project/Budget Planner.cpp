@@ -150,7 +150,7 @@ void signUpMenu(vector<AccountClass*>& AccountVector) {
         std::cerr << "\t•Must contain at least 1 uppercase letter.\n";
         std::cerr << "\t•Must contain at least 1 number.\n";
         std::cerr << "\t•Must contain at least 1 of the following symbols (~`!@#$%^&*()_-+={[}]|\\:;\"\'<,>.?/).\n";
-        std::cerr << "\t•Must contains at least 8 characters.\n" << std::flush;
+        std::cerr << "\t•Must contain at least 8 characters.\n" << std::flush;
         return;
     }
 
