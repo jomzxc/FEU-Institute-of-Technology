@@ -42,24 +42,24 @@ public:
     vector<BudgetClass*> BudgetVector;
 };
 
-void pause();
-
+void loginMenu(vector<AccountClass*>& AccountVector);
 void signUpMenu(vector<AccountClass*>& AccountVector);
+void budgetMenu(AccountClass*& user, std::vector<AccountClass*>& AccountVector);
+void expenseMenu(int index, BudgetClass*& userBudget, vector<BudgetClass*> user_BudgetVector);
+
+int selectAccount(AccountClass*& user, std::vector<AccountClass*>& AccountVector);
+
 bool isUsernameExists(string new_user, vector<AccountClass*> AccountVector);
 bool isValidPassword(string password);
 
-void loginMenu(vector<AccountClass*>& AccountVector);
-int selectAccount(AccountClass*& user, std::vector<AccountClass*>& AccountVector);
-
-void budgetMenu(AccountClass*& user, std::vector<AccountClass*>& AccountVector);
 void addBudget(vector<BudgetClass*>& user_BudgetVector);
 int displaySelectBudget(vector<BudgetClass*>& user_BudgetVector);
 
-void expenseMenu(int index, BudgetClass*& userBudget, vector<BudgetClass*> user_BudgetVector);
 void addExpense(vector<ExpenseClass*>& user_ExpenseVector);
 void displayExpense(vector<ExpenseClass*> user_ExpenseVector);
 void renameBudget(BudgetClass*& userBudget, vector<BudgetClass*> user_BudgetVector);
 
+void pause();
 
 int main()
 {
@@ -95,9 +95,28 @@ int main()
     }
 }
 
-void pause() {
-    cout << "\nPress any key to continue..." << flush;
-    _getch();
+void loginMenu(vector<AccountClass*>& AccountVector) {
+    system("CLS");
+
+    AccountClass* user = new AccountClass();
+
+    cout << "LOG IN\n\n";
+    cout << "Username: ";
+    cin >> user->username;
+    cout << "Password: ";
+    cin >> user->password;
+
+    int index = selectAccount(user, AccountVector);
+    if (!index) {
+        std::cerr << "\nError... Invalid username or password!\n" << std::flush;
+        return;
+    }
+
+    std::cout << "\nLogging in...\n";
+    pause();
+
+    budgetMenu(AccountVector[index - 1], AccountVector);
+
     return;
 }
 
@@ -141,6 +160,100 @@ void signUpMenu(vector<AccountClass*>& AccountVector) {
     return;
 }
 
+void budgetMenu(AccountClass*& user, std::vector<AccountClass*>& AccountVector) {
+    while (true) {
+        system("CLS");
+
+        std::cout << "WELCOME TO XYZ BUDGET PLANNER\n\n";
+        std::cout << "Press the number of the action you want to do.\n\n";
+        std::cout << "[1] Open a budget\n";
+        std::cout << "[2] Add a budget\n";
+        std::cout << "[3] Sign out\n";
+        std::cout << "[4] Exit\n\n";
+
+        char action = _getch();
+
+        switch (action) {
+        case '1': {
+            int index = displaySelectBudget(user->BudgetVector);
+            if (index) {
+                expenseMenu(index, user->BudgetVector[index - 1], user->BudgetVector);
+            }
+            pause();
+            break;
+        }
+        case '2':
+            addBudget(user->BudgetVector);
+            pause();
+            break;
+        case '3':
+            cout << "Signing out...\n";
+            return;
+        case '4':
+            cout << "Thank you for using XYZ Budget Planner!\n";
+            exit(EXIT_SUCCESS);
+        default:
+            cerr << "Error... Invalid Action. Try Again!\n" << flush;
+            pause();
+            break;
+        }
+    }
+}
+
+void expenseMenu(int index, BudgetClass*& userBudget, vector<BudgetClass*> user_BudgetVector) {
+    while (true) {
+        system("CLS");
+
+        cout << "Budget: " << userBudget->budget_name << "\n";
+        cout << "Remaining Balance: " << CURRENCY << userBudget->current_balance() << "\n\n";
+        cout << "Press the number of the action you want to do.\n\n";
+        cout << "[1] Add Expense\n";
+        cout << "[2] Open Expense\n";
+        cout << "[3] Edit Budgeted Amount\n";
+        cout << "[4] Rename\n";
+        cout << "[5] Go Back\n\n";
+
+        char action = _getch();
+
+        switch (action) {
+        case '1':
+            addExpense(userBudget->ExpenseVector);
+            pause();
+            break;
+        case '2':
+            displayExpense(userBudget->ExpenseVector);
+            pause();
+            break;
+        case '3':
+            system("CLS");
+
+            cout << "EDIT BUDGETED AMOUNT\n\n";
+            cout << "New Budgeted Amount: " << CURRENCY;
+            cin >> userBudget->budgeted_amount;
+            cout << "\nBudgeted amount changed successfully!\n\n";
+            pause();
+            break;
+        case '4': {
+            renameBudget(userBudget, user_BudgetVector);
+            pause();
+            break;
+        }
+        case '5':
+            return;
+        }
+    }
+}
+
+int selectAccount(AccountClass*& user, std::vector<AccountClass*>& AccountVector) {
+    for (int i = 0; i < AccountVector.size(); i++) {
+        if (AccountVector[i]->username == user->username) {
+            return i + 1;
+        }
+    }
+
+    return 0;
+}
+
 bool isUsernameExists(std::string new_user, std::vector<AccountClass*> AccountVector) {
     for (auto& account : AccountVector) {
         if (new_user == account->username) {
@@ -178,81 +291,6 @@ bool isValidPassword(std::string password) {
     return false;
 }
 
-void loginMenu(vector<AccountClass*>& AccountVector) {
-    system("CLS");
-
-    AccountClass* user = new AccountClass();
-
-    cout << "LOG IN\n\n";
-    cout << "Username: ";
-    cin >> user->username;
-    cout << "Password: ";
-    cin >> user->password;
-
-    int index = selectAccount(user, AccountVector);
-    if (!index) {
-        std::cerr << "\nError... Invalid username or password!\n" << std::flush;
-        return;
-    }
-
-    std::cout << "\nLogging in...\n";
-    pause();
-
-    budgetMenu(AccountVector[index-1], AccountVector);
-
-    return;
-}
-
-int selectAccount(AccountClass*& user, std::vector<AccountClass*>& AccountVector) {
-    for (int i = 0; i < AccountVector.size(); i++) {
-        if (AccountVector[i]->username == user->username) {
-            return i + 1;
-        }
-    }
-
-    return 0;
-}
-
-void budgetMenu(AccountClass*& user, std::vector<AccountClass*>& AccountVector) {
-    while (true) {
-        system("CLS");
-
-        std::cout << "WELCOME TO XYZ BUDGET PLANNER\n\n";
-        std::cout << "Press the number of the action you want to do.\n\n";
-        std::cout << "[1] Open a budget\n";
-        std::cout << "[2] Add a budget\n";
-        std::cout << "[3] Sign out\n";
-        std::cout << "[4] Exit\n\n";
-
-        char action = _getch();
-
-        switch (action) {
-        case '1': {
-            int index = displaySelectBudget(user->BudgetVector);
-            if (index) {
-                expenseMenu(index, user->BudgetVector[index-1], user->BudgetVector);
-            }
-            pause();
-            break;
-        }
-        case '2':
-            addBudget(user->BudgetVector);
-            pause();
-            break;
-        case '3':
-            cout << "Signing out...\n";
-            return;
-        case '4':
-            cout << "Thank you for using XYZ Budget Planner!\n";
-            exit(EXIT_SUCCESS);
-        default:
-            cerr << "Error... Invalid Action. Try Again!\n" << flush;
-            pause();
-            break;
-        }
-    }
-}
-
 void addBudget(vector<BudgetClass*>& user_BudgetVector) {
     system("CLS");
 
@@ -261,7 +299,7 @@ void addBudget(vector<BudgetClass*>& user_BudgetVector) {
     cout << "ADD BUDGET\n\n";
     cout << "Budget Name: ";
     getline(cin >> ws, placeholder->budget_name);
-    cout << "Budgeted Amount: ";
+    cout << "Budgeted Amount: " << CURRENCY;
     cin >> placeholder->budgeted_amount;
 
     for (auto budget : user_BudgetVector) {
@@ -287,7 +325,7 @@ int displaySelectBudget(vector<BudgetClass*>& user_BudgetVector) {
     for (auto budget : user_BudgetVector) {
         cout << "[" << ++n << "] " << budget->budget_name << ".\n";
     }
-    
+
     cout << "[0] Go back.\n\n";
     cout << "Enter the number of the budget you want to open: ";
     cin >> selected_budget;
@@ -296,57 +334,13 @@ int displaySelectBudget(vector<BudgetClass*>& user_BudgetVector) {
         cout << "\nGoing back...\n";
         return 0;
     }
-    
+
     return selected_budget;
-}
-
-void expenseMenu(int index, BudgetClass*& userBudget, vector<BudgetClass*> user_BudgetVector) {
-    while (true) {
-        system("CLS");
-
-        cout << "BUDGET: " << userBudget->budget_name << "\n";
-        cout << "Remaining Balance: " << CURRENCY << userBudget->current_balance() << "\n\n";
-        cout << "Press the number of the action you want to do.\n\n";
-        cout << "[1] Add Expense\n";
-        cout << "[2] Open Expense\n";
-        cout << "[3] Edit Budgeted Amount\n";
-        cout << "[4] Rename\n";
-        cout << "[5] Go Back\n\n";
-
-        char action = _getch();
-
-        switch (action) {
-        case '1':
-            addExpense(userBudget->ExpenseVector);
-            pause();
-            break;
-        case '2':
-            displayExpense(userBudget->ExpenseVector);
-            pause();
-            break;
-        case '3':
-            system("CLS");
-
-            cout << "EDIT BUDGETED AMOUNT\n\n";
-            cout << "New Budgeted Amount: " << CURRENCY;
-            cin >> userBudget->budgeted_amount;
-            cout << "\nBudgeted amount changed successfully!\n\n";
-            pause();
-            break;
-        case '4': {
-            renameBudget(userBudget, user_BudgetVector);            
-            pause();
-            break;
-        }
-        case '5':
-            return;
-        }
-    }
 }
 
 void addExpense(vector<ExpenseClass*>& user_ExpenseVector) {
     system("CLS");
-    
+
     ExpenseClass* placeholder = new ExpenseClass();
 
     cout << "ADD EXPENSE\n\n";
@@ -365,7 +359,7 @@ void addExpense(vector<ExpenseClass*>& user_ExpenseVector) {
 
     user_ExpenseVector.push_back(placeholder);
     cout << "\nExpense added successfully!\n";
-    
+
     return;
 }
 
@@ -395,7 +389,7 @@ void renameBudget(BudgetClass*& userBudget, vector<BudgetClass*> user_BudgetVect
     system("CLS");
 
     string new_budget_name;
-    
+
     cout << "New Budget Name: ";
     getline(cin >> ws, new_budget_name);
 
@@ -409,5 +403,11 @@ void renameBudget(BudgetClass*& userBudget, vector<BudgetClass*> user_BudgetVect
     userBudget->budget_name = new_budget_name;
     cout << "\nBudget name renamed successfully!\n";
 
+    return;
+}
+
+void pause() {
+    cout << "\nPress any key to continue..." << flush;
+    _getch();
     return;
 }
