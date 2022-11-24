@@ -401,7 +401,7 @@ void renameBudget(BudgetClass*& userBudget, vector<BudgetClass*> user_BudgetVect
     }
 
     userBudget->budget_name = new_budget_name;
-    cout << "\nBudget name renamed successfully!\n";
+    cout << "\nBudget renamed successfully!\n";
 
     return;
 }
