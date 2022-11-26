@@ -158,11 +158,11 @@ void signUpMenu(vector<DepartmentAccountClass*>& DepartmentAccountVector) {
     if (!isValidPassword(new_department->password)) {
         std::cerr << "\nError... Invalid Password.\n";
         std::cerr << "Password Requirements:\n";
-        std::cerr << "\t•Must contain at least 1 lowercase letter.\n";
-        std::cerr << "\t•Must contain at least 1 uppercase letter.\n";
-        std::cerr << "\t•Must contain at least 1 number.\n";
-        std::cerr << "\t•Must contain at least 1 of the following symbols (~`!@#$%^&*()_-+={[}]|\\:;\"\'<,>.?/).\n";
-        std::cerr << "\t•Must contain at least 8 characters.\n" << std::flush;
+        std::cerr << "\tâ€¢Must contain at least 1 lowercase letter.\n";
+        std::cerr << "\tâ€¢Must contain at least 1 uppercase letter.\n";
+        std::cerr << "\tâ€¢Must contain at least 1 number.\n";
+        std::cerr << "\tâ€¢Must contain at least 1 of the following symbols (~`!@#$%^&*()_-+={[}]|\\:;\"\'<,>.?/).\n";
+        std::cerr << "\tâ€¢Must contain at least 8 characters.\n" << std::flush;
         return;
     }
 
