@@ -52,8 +52,8 @@ void addProject(vector<DepartmentProject*>& department_ProjectVector);
 int displaySelectProject(vector<DepartmentProject*>& department_ProjectVector);
 
 void addExpense(vector<ExpenseClass*>& department_ExpenseVector);
-void displayExpense(vector<ExpenseClass*> department_ExpenseVector);
-void displayDetailedExpense(vector<ExpenseClass*> department_ExpenseVector);
+void displayAllExpense(vector<ExpenseClass*> department_ExpenseVector);
+void displayFilteredExpense(vector<ExpenseClass*>& department_ExpenseVector);
 bool isInDateRange(ExpenseClass* expense, int starting_month, int starting_day, int starting_year, int end_month, int end_day, int end_year);
 void renameProject(DepartmentProject*& departmentProject, vector<DepartmentProject*> department_ProjectVector);
 
@@ -207,8 +207,8 @@ void expenseMenu(int index, DepartmentProject*& departmentProject, vector<Depart
         cout << "Remaining Project Balance: " << CURRENCY << fixed << setprecision(2) << departmentProject->current_balance() << "\n\n";
         cout << "Press the number of the action you want to do.\n\n";
         cout << "[1] Add Expense\n";
-        cout << "[2] Open Expense\n";
-        cout << "[3] Get Detailed Expense\n";
+        cout << "[2] Display All Expense\n";
+        cout << "[3] Display Filtered Expense\n";
         cout << "[4] Edit Allotted Budget\n";
         cout << "[5] Rename\n";
         cout << "[6] Go Back\n\n";
@@ -221,18 +221,18 @@ void expenseMenu(int index, DepartmentProject*& departmentProject, vector<Depart
             pause();
             break;
         case '2':
-            displayExpense(departmentProject->ExpenseVector);
+            displayAllExpense(departmentProject->ExpenseVector);
             pause();
             break;
         case '3':
-            displayDetailedExpense(departmentProject->ExpenseVector);
+            displayFilteredExpense(departmentProject->ExpenseVector);
             pause();
             break;
         case '4':
             system("CLS");
 
             cout << "EDIT ALLOTED PROJECT BUDGET\n\n";
-            cout << "New Alloted Budget: " << CURRENCY;
+            cout << "New Alloted Budget:" << CURRENCY;
             cin >> departmentProject->alloted_budget;
             cout << "\nAlloted budget changed successfully!\n\n";
             pause();
@@ -361,53 +361,27 @@ void addExpense(vector<ExpenseClass*>& department_ExpenseVector) {
     return;
 }
 
-void displayExpense(vector<ExpenseClass*> department_ExpenseVector) {
+
+void displayAllExpense(vector<ExpenseClass*> department_ExpenseVector) {
     system("CLS");
 
     cout << "EXPENSES\n\n";
 
-    int counter = 0;
+    cout << "Date (DD/MM/YYYY)\t" << left << setw(50) << "Expenses" << "Amount" << endl;
 
-    vector<ExpenseClass*> placeholder_expenseVector;
-    ExpenseClass* placeholder_expense = new ExpenseClass();
-
-    bool not_exist = true;
     for (auto expense : department_ExpenseVector) {
-        for (auto placeholder : placeholder_expenseVector) {
-            not_exist = true;
-            if (expense->description == placeholder->description) {
-                placeholder->amount += expense->amount;
-                not_exist = false;
-                break;
-            }
-        }
-        if (not_exist) {
-            placeholder_expense->description = expense->description;
-            placeholder_expense->amount = expense->amount;
-            placeholder_expenseVector.push_back(placeholder_expense);
-            not_exist = false;
-        }
+        cout << ((expense->day < 10) ? 0 : "") << expense->day << "/" << ((expense->month < 10) ? 0 : "") << expense->month << "/" << expense->year << "\t\t";
+        cout << left << setw(50) << expense->description;
+        cout << fixed << setprecision(2) << CURRENCY << expense->amount << endl;
+
     }
 
-    for (auto expense : placeholder_expenseVector) {
-        cout << "-> " << expense->description << " : " << CURRENCY << fixed << setprecision(2) << expense->amount << "\n";
-    }
-
-    placeholder_expenseVector.clear();
-
-    cout << "[0] Go back.\n\n";
-
-    while (true) {
-        if (_getch() == '0') {
-            cout << "Going back...\n";
-            break;
-        }
-    }
-
+    cout << "\n";
     return;
 }
 
-void displayDetailedExpense(vector<ExpenseClass*> department_ExpenseVector) {
+
+void displayFilteredExpense(vector<ExpenseClass*>& department_ExpenseVector) {
     system("CLS");
 
     int starting_month, starting_day, starting_year;
@@ -433,17 +407,17 @@ void displayDetailedExpense(vector<ExpenseClass*> department_ExpenseVector) {
     cin >> end_year;
     cout << "\n\n";
 
-    cout << "Date (DD/MM/YYYY)\t" << left << setw(50) << "Expenses" << left << setw(20) << "Amount" << endl;
+    cout << "Date (DD/MM/YYYY)\t" << left << setw(50) << "Expenses" << "Amount" << endl;
 
     for (auto expense : department_ExpenseVector) {
         if (isInDateRange(expense, starting_month, starting_day, starting_year, end_month, end_day, end_year)) {
 
             cout << ((expense->day < 10) ? 0 : "") << expense->day << "/" << ((expense->month < 10) ? 0 : "") << expense->month << "/" << expense->year << "\t\t";
             cout << left << setw(50) << expense->description;
-            cout << left << setw(20) << fixed << setprecision(2) << expense->amount << endl;
+            cout << fixed << setprecision(2) << CURRENCY << expense->amount << endl;
         }
     }
-
+    cout << "\n";
     return;
 }
 
