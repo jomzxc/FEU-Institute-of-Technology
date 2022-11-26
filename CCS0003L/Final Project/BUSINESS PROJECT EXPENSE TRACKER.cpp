@@ -5,20 +5,7 @@
 #include <string>
 #include <iostream>
 
-using std::cout;
-using std::cerr;
-using std::cin;
-using std::fixed;
-using std::setprecision;
-using std::endl;
-using std::flush;
-using std::ws;
-using std::setfill;
-using std::setw;
-using std::left;
-using std::remove_if;
-using std::string;
-using std::vector;
+using namespace std;
 
 #define CURRENCY "Php "
 
@@ -461,15 +448,16 @@ void displayDetailedExpense(vector<ExpenseClass*> department_ExpenseVector) {
 }
 
 bool isInDateRange(ExpenseClass* expense, int starting_month, int starting_day, int starting_year, int end_month, int end_day, int end_year) {
-
-    if (expense->year >= starting_year && expense->year <= end_year) {
-        if (expense->month >= starting_month && expense->month <= end_month) {
-            if (expense->day >= starting_day && expense->day <= end_day) {
-                return true;
-            }
-        }
+    int entry_date = (expense->year * 10000) + (expense->month * 100) + expense->day;
+    int start_date = (starting_year * 10000) + (starting_month * 100) + starting_day;
+    int end_date = (end_year * 10000) + (end_month * 100) + end_day;
+    
+    if (entry_date >= start_date && entry_date <= end_date) {
+        return true;
     }
-    return false;
+    else {
+        return false;
+    }
 }
 
 void renameProject(DepartmentProject*& departmentProject, vector<DepartmentProject*> department_ProjectVector) {
