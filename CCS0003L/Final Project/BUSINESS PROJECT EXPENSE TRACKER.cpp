@@ -297,7 +297,7 @@ void expenseMenu(int index, DepartmentProject*& departmentProject, vector<Depart
             cout << "New Alloted Budget:" << CURRENCY;
             cin >> departmentProject->alloted_budget;
             cout << "\nAlloted budget changed successfully!\n\n";
-			
+
             pause();
             break;
         case '5':
@@ -361,12 +361,12 @@ bool isValidPassword(std::string password) {
     std::string validSymbols = R"()~`!@#$%^&*()_-+={[}]|\:;"'<,>.?/)";
 
     /**
-	 * Check if the password contains at least 1 lowercase letter.
-	 * Check if the password contains at least 1 uppercase letter.
-	 * Check if the password contains at least 1 number.
-	 * Check if the password contains at least 1 of the following symbols (~`!@#$%^&*()_-+={[}]|\\:;\"\'<,>.?/).
-	 * Check if the password contains at least 8 characters.
-	 */
+     * Check if the password contains at least 1 lowercase letter.
+     * Check if the password contains at least 1 uppercase letter.
+     * Check if the password contains at least 1 number.
+     * Check if the password contains at least 1 of the following symbols (~`!@#$%^&*()_-+={[}]|\\:;\"\'<,>.?/).
+     * Check if the password contains at least 8 characters.
+     */
     for (int i = 0; i < password.length(); i++) {
         if (password[i] >= 'a' && password[i] <= 'z')
             containsLowercase = true;
@@ -436,7 +436,7 @@ int displaySelectProject(vector<DepartmentProject*>& department_ProjectVector) {
     cout << "YOUR PROJECTS\n\n";
 
     /**
-	 * Displays the projects in the department account.
+     * Displays the projects in the department account.
      */
     for (auto project : department_ProjectVector) {
         cout << "[" << ++n << "] " << project->project_name << ".\n";
@@ -492,7 +492,7 @@ void addExpense(vector<ExpenseClass*>& department_ExpenseVector) {
 void displayAllExpense(vector<ExpenseClass*> department_ExpenseVector) {
     system("CLS");
 
-    cout << "EXPENSES\n\n";
+    cout << "ALL EXPENSES\n\n";
 
     cout << "Date (DD/MM/YYYY)\t" << left << setw(50) << "Expenses" << "Amount" << endl;
 
@@ -544,8 +544,8 @@ void displayFilteredExpense(vector<ExpenseClass*>& department_ExpenseVector) {
     cout << "Date (DD/MM/YYYY)\t" << left << setw(50) << "Expenses" << "Amount" << endl;
 
     /**
-	 * This is a lambda function that checks if the date is within the range.
-	 */
+     * This is a lambda function that checks if the date is within the range.
+     */
     for (auto expense : department_ExpenseVector) {
         if (isInDateRange(expense, starting_month, starting_day, starting_year, end_month, end_day, end_year)) {
 
@@ -575,7 +575,7 @@ bool isInDateRange(ExpenseClass* expense, int starting_month, int starting_day, 
     int entry_date = (expense->year * 10000) + (expense->month * 100) + expense->day;
     int start_date = (starting_year * 10000) + (starting_month * 100) + starting_day;
     int end_date = (end_year * 10000) + (end_month * 100) + end_day;
-    
+
     if (entry_date >= start_date && entry_date <= end_date) {
         return true;
     }
@@ -602,8 +602,8 @@ void renameProject(DepartmentProject*& departmentProject, vector<DepartmentProje
     getline(cin >> ws, new_project_name);
 
     /**
-	 * Check if the new project name is already taken.
-	 */
+     * Check if the new project name is already taken.
+     */
     for (auto project : department_ProjectVector) {
         if (new_project_name == project->project_name) {
             cerr << "\nError... Project name already exists!\n";
@@ -612,8 +612,8 @@ void renameProject(DepartmentProject*& departmentProject, vector<DepartmentProje
     }
 
     /**
-	 * Rename the project.
-	 */
+     * Rename the project.
+     */
     departmentProject->project_name = new_project_name;
     cout << "\nProject renamed successfully!\n";
 
@@ -700,9 +700,9 @@ void ExpenseClass::get_year(int& year) {
  */
 float DepartmentProject::current_balance() {
     float expense_sum = 0;
-	
+
     /**
-	 * Loops through the vector of expenses and adds the amount of each expense to the expense_sum.
+     * Loops through the vector of expenses and adds the amount of each expense to the expense_sum.
      */
     for (auto expense : ExpenseVector) {
         expense_sum += expense->amount;
