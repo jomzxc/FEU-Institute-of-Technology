@@ -9,6 +9,19 @@ using namespace std;
 
 #define CURRENCY "Php "
 
+
+/**
+ * A class that represents an expense.
+ *
+ * @param description The description of the expense.
+ * @param amount The amount of the expense.
+ * @param month The month of the expense.
+ * @param day The day of the expense.
+ * @param year The year of the expense.
+ *
+ * @returns None
+ */
+
 class ExpenseClass {
 public:
     string description;
@@ -22,6 +35,15 @@ public:
     void get_year(int& year);
 };
 
+
+
+/**
+ * A class that represents a department project.
+ *
+ * @param project_name The name of the project.
+ * @param alloted_budget The budget allocated to the project.
+ * @param ExpenseVector The vector of expenses.
+ */
 class DepartmentProject {
 public:
     string project_name;
@@ -31,6 +53,13 @@ public:
     float current_balance();
 };
 
+/**
+ * A class that represents a DepartmentAccount.
+ *
+ * @param email The email address of the DepartmentAccount.
+ * @param password The password of the DepartmentAccount.
+ * @param DepartmentProjectVector The vector of DepartmentProjects.
+ */
 class DepartmentAccountClass {
 public:
     string email;
@@ -60,6 +89,13 @@ void renameProject(DepartmentProject*& departmentProject, vector<DepartmentProje
 
 void pause();
 
+/**
+ * The main menu of the program.
+ *
+ * @param DepartmentAccountClass The list of DepartmentAccountClass objects.
+ *
+ * @returns None
+ */
 int main()
 {
     vector<DepartmentAccountClass*> DepartmentAccountClass; // Vector of DepartmentAccountClass
@@ -94,6 +130,13 @@ int main()
     }
 }
 
+/**
+ * Displays the login menu and processes the user's input.
+ *
+ * @param DepartmentAccountVector A vector of DepartmentAccountClass objects.
+ *
+ * @returns None
+ */
 void loginMenu(vector<DepartmentAccountClass*>& DepartmentAccountVector) {
     system("CLS");
 
@@ -119,6 +162,13 @@ void loginMenu(vector<DepartmentAccountClass*>& DepartmentAccountVector) {
     return;
 }
 
+/**
+ * Sign up menu for the business department.
+ *
+ * @param DepartmentAccountVector The vector of business department accounts.
+ *
+ * @returns None
+ */
 void signUpMenu(vector<DepartmentAccountClass*>& DepartmentAccountVector) {
     system("CLS");
 
@@ -145,11 +195,11 @@ void signUpMenu(vector<DepartmentAccountClass*>& DepartmentAccountVector) {
     if (!isValidPassword(new_department->password)) {
         std::cerr << "\nError... Invalid Password.\n";
         std::cerr << "Password Requirements:\n";
-        std::cerr << "\t•Must contain at least 1 lowercase letter.\n";
-        std::cerr << "\t•Must contain at least 1 uppercase letter.\n";
-        std::cerr << "\t•Must contain at least 1 number.\n";
-        std::cerr << "\t•Must contain at least 1 of the following symbols (~`!@#$%^&*()_-+={[}]|\\:;\"\'<,>.?/).\n";
-        std::cerr << "\t•Must contain at least 8 characters.\n" << std::flush;
+        std::cerr << "\t�Must contain at least 1 lowercase letter.\n";
+        std::cerr << "\t�Must contain at least 1 uppercase letter.\n";
+        std::cerr << "\t�Must contain at least 1 number.\n";
+        std::cerr << "\t�Must contain at least 1 of the following symbols (~`!@#$%^&*()_-+={[}]|\\:;\"\'<,>.?/).\n";
+        std::cerr << "\t�Must contain at least 8 characters.\n" << std::flush;
         return;
     }
 
@@ -159,6 +209,14 @@ void signUpMenu(vector<DepartmentAccountClass*>& DepartmentAccountVector) {
     return;
 }
 
+/**
+ * Displays the project menu.
+ *
+ * @param department The department account class.
+ * @param DepartmentAccountVector The vector of department account classes.
+ *
+ * @returns None
+ */
 void projectMenu(DepartmentAccountClass*& department, std::vector<DepartmentAccountClass*>& DepartmentAccountVector) {
     while (true) {
         system("CLS");
@@ -199,6 +257,15 @@ void projectMenu(DepartmentAccountClass*& department, std::vector<DepartmentAcco
     }
 }
 
+/**
+ * Displays the expense menu.
+ *
+ * @param index The index of the project in the vector.
+ * @param departmentProject The project to display.
+ * @param department_ProjectVector The vector of projects.
+ *
+ * @returns None
+ */
 void expenseMenu(int index, DepartmentProject*& departmentProject, vector<DepartmentProject*> department_ProjectVector) {
     while (true) {
         system("CLS");
@@ -235,6 +302,7 @@ void expenseMenu(int index, DepartmentProject*& departmentProject, vector<Depart
             cout << "New Alloted Budget:" << CURRENCY;
             cin >> departmentProject->alloted_budget;
             cout << "\nAlloted budget changed successfully!\n\n";
+			
             pause();
             break;
         case '5':
@@ -247,6 +315,14 @@ void expenseMenu(int index, DepartmentProject*& departmentProject, vector<Depart
     }
 }
 
+/**
+ * Selects the account for the department.
+ *
+ * @param department The department to select the account for.
+ * @param DepartmentAccountVector The vector of department accounts.
+ *
+ * @returns The index of the account in the vector.
+ */
 int selectAccount(DepartmentAccountClass*& department, std::vector<DepartmentAccountClass*>& DepartmentAccountVector) {
     for (int i = 0; i < DepartmentAccountVector.size(); i++) {
         if (DepartmentAccountVector[i]->email == department->email) {
@@ -257,6 +333,14 @@ int selectAccount(DepartmentAccountClass*& department, std::vector<DepartmentAcc
     return 0;
 }
 
+/**
+ * Checks if a username already exists.
+ *
+ * @param new_department The new department to be added.
+ * @param DepartmentAccountVector The vector of department accounts.
+ *
+ * @returns True if the username already exists, false otherwise.
+ */
 bool isUsernameExists(std::string new_department, std::vector<DepartmentAccountClass*> DepartmentAccountVector) {
     for (auto& account : DepartmentAccountVector) {
         if (new_department == account->email) {
@@ -266,6 +350,13 @@ bool isUsernameExists(std::string new_department, std::vector<DepartmentAccountC
     return false;
 }
 
+/**
+ * Checks if a password is valid.
+ *
+ * @param password The password to check.
+ *
+ * @returns True if the password is valid, false otherwise.
+ */
 bool isValidPassword(std::string password) {
     bool containsSymbol = false;
     bool containsNumber = false;
@@ -274,6 +365,13 @@ bool isValidPassword(std::string password) {
 
     std::string validSymbols = R"()~`!@#$%^&*()_-+={[}]|\:;"'<,>.?/)";
 
+    /**
+	 * Check if the password contains at least 1 lowercase letter.
+	 * Check if the password contains at least 1 uppercase letter.
+	 * Check if the password contains at least 1 number.
+	 * Check if the password contains at least 1 of the following symbols (~`!@#$%^&*()_-+={[}]|\\:;\"\'<,>.?/).
+	 * Check if the password contains at least 8 characters.
+	 */
     for (int i = 0; i < password.length(); i++) {
         if (password[i] >= 'a' && password[i] <= 'z')
             containsLowercase = true;
@@ -294,6 +392,13 @@ bool isValidPassword(std::string password) {
     return false;
 }
 
+/**
+ * Adds a new project to the department.
+ *
+ * @param department_ProjectVector The vector of projects in the department.
+ *
+ * @returns None
+ */
 void addProject(vector<DepartmentProject*>& department_ProjectVector) {
     system("CLS");
 
@@ -305,6 +410,9 @@ void addProject(vector<DepartmentProject*>& department_ProjectVector) {
     cout << "Allotted Budget: " << CURRENCY;
     cin >> placeholder->alloted_budget;
 
+    /**
+     * Check if project name already exists.
+     */
     for (auto project : department_ProjectVector) {
         if (placeholder->project_name == project->project_name) {
             cerr << "\nError... Project already exists!\n" << flush;
@@ -318,6 +426,13 @@ void addProject(vector<DepartmentProject*>& department_ProjectVector) {
     return;
 }
 
+/**
+ * Displays the selected project details.
+ *
+ * @param department_ProjectVector The vector of department projects.
+ *
+ * @returns None
+ */
 int displaySelectProject(vector<DepartmentProject*>& department_ProjectVector) {
     system("CLS");
 
@@ -325,6 +440,9 @@ int displaySelectProject(vector<DepartmentProject*>& department_ProjectVector) {
 
     cout << "YOUR PROJECTS\n\n";
 
+    /**
+	 * Displays the projects in the department account.
+     */
     for (auto project : department_ProjectVector) {
         cout << "[" << ++n << "] " << project->project_name << ".\n";
     }
@@ -341,6 +459,13 @@ int displaySelectProject(vector<DepartmentProject*>& department_ProjectVector) {
     return selected_project;
 }
 
+/**
+ * Adds an expense to the department's expense vector.
+ *
+ * @param department_ExpenseVector The department's expense vector.
+ *
+ * @returns None
+ */
 void addExpense(vector<ExpenseClass*>& department_ExpenseVector) {
     system("CLS");
 
@@ -362,6 +487,13 @@ void addExpense(vector<ExpenseClass*>& department_ExpenseVector) {
 }
 
 
+/**
+ * Displays all the expenses in the department.
+ *
+ * @param department_ExpenseVector The vector of expenses in the department.
+ *
+ * @returns None
+ */
 void displayAllExpense(vector<ExpenseClass*> department_ExpenseVector) {
     system("CLS");
 
@@ -381,6 +513,13 @@ void displayAllExpense(vector<ExpenseClass*> department_ExpenseVector) {
 }
 
 
+/**
+ * Displays the filtered expenses for a department.
+ *
+ * @param department_ExpenseVector The vector of expenses for a department.
+ *
+ * @returns None
+ */
 void displayFilteredExpense(vector<ExpenseClass*>& department_ExpenseVector) {
     system("CLS");
 
@@ -409,6 +548,9 @@ void displayFilteredExpense(vector<ExpenseClass*>& department_ExpenseVector) {
 
     cout << "Date (DD/MM/YYYY)\t" << left << setw(50) << "Expenses" << "Amount" << endl;
 
+    /**
+	 * This is a lambda function that checks if the date is within the range.
+	 */
     for (auto expense : department_ExpenseVector) {
         if (isInDateRange(expense, starting_month, starting_day, starting_year, end_month, end_day, end_year)) {
 
@@ -421,6 +563,19 @@ void displayFilteredExpense(vector<ExpenseClass*>& department_ExpenseVector) {
     return;
 }
 
+/**
+ * Checks if an expense is in a given date range.
+ *
+ * @param expense The expense to check.
+ * @param starting_month The starting month of the date range.
+ * @param starting_day The starting day of the date range.
+ * @param starting_year The starting year of the date range.
+ * @param end_month The ending month of the date range.
+ * @param end_day The ending day of the date range.
+ * @param end_year The ending year of the date range.
+ *
+ * @returns True if the expense is in the date range, false otherwise.
+ */
 bool isInDateRange(ExpenseClass* expense, int starting_month, int starting_day, int starting_year, int end_month, int end_day, int end_year) {
     int entry_date = (expense->year * 10000) + (expense->month * 100) + expense->day;
     int start_date = (starting_year * 10000) + (starting_month * 100) + starting_day;
@@ -434,6 +589,14 @@ bool isInDateRange(ExpenseClass* expense, int starting_month, int starting_day, 
     }
 }
 
+/**
+ * Renames a project in a department.
+ *
+ * @param departmentProject The project to rename.
+ * @param department_ProjectVector The vector of all projects in the department.
+ *
+ * @returns None
+ */
 void renameProject(DepartmentProject*& departmentProject, vector<DepartmentProject*> department_ProjectVector) {
     system("CLS");
 
@@ -443,6 +606,9 @@ void renameProject(DepartmentProject*& departmentProject, vector<DepartmentProje
     cout << "New Project Name: ";
     getline(cin >> ws, new_project_name);
 
+    /**
+	 * Check if the new project name is already taken.
+	 */
     for (auto project : department_ProjectVector) {
         if (new_project_name == project->project_name) {
             cerr << "\nError... Project name already exists!\n";
@@ -450,18 +616,33 @@ void renameProject(DepartmentProject*& departmentProject, vector<DepartmentProje
         }
     }
 
+    /**
+	 * Rename the project.
+	 */
     departmentProject->project_name = new_project_name;
     cout << "\nProject renamed successfully!\n";
 
     return;
 }
 
+/**
+ * Pauses the program until the user presses a key.
+ *
+ * @returns None
+ */
 void pause() {
     cout << "\nPress any key to continue..." << flush;
     _getch();
     return;
 }
 
+/**
+ * Gets the day of the month.
+ *
+ * @param day The day of the month.
+ *
+ * @returns None
+ */
 void ExpenseClass::get_day(int& day) {
     while (true) {
         cout << "Day (01 - 31): ";
@@ -477,6 +658,13 @@ void ExpenseClass::get_day(int& day) {
     return;
 }
 
+/**
+ * Gets the month from the user.
+ *
+ * @param month The month to be returned.
+ *
+ * @returns None
+ */
 void ExpenseClass::get_month(int& month) {
     while (true) {
         month;
@@ -494,6 +682,13 @@ void ExpenseClass::get_month(int& month) {
     return;
 }
 
+/**
+ * Gets the year of the expense.
+ *
+ * @param year The year of the expense.
+ *
+ * @returns None
+ */
 void ExpenseClass::get_year(int& year) {
     cout << "Year: ";
     cin >> year;
@@ -501,8 +696,19 @@ void ExpenseClass::get_year(int& year) {
     return;
 }
 
+/**
+ * Gets the description of the expense.
+ *
+ * @param description The description of the expense.
+ *
+ * @returns None
+ */
 float DepartmentProject::current_balance() {
     float expense_sum = 0;
+	
+    /**
+	 * Loops through the vector of expenses and adds the amount of each expense to the expense_sum.
+     */
     for (auto expense : ExpenseVector) {
         expense_sum += expense->amount;
     }
