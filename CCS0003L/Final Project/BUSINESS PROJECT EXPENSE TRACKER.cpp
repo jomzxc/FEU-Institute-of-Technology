@@ -9,7 +9,6 @@ using namespace std;
 
 #define CURRENCY "Php "
 
-
 /**
  * A class that represents an expense.
  *
@@ -21,7 +20,6 @@ using namespace std;
  *
  * @returns None
  */
-
 class ExpenseClass {
 public:
     string description;
@@ -34,8 +32,6 @@ public:
     void get_month(int& month);
     void get_year(int& year);
 };
-
-
 
 /**
  * A class that represents a department project.
@@ -85,7 +81,6 @@ void displayAllExpense(vector<ExpenseClass*> department_ExpenseVector);
 void displayFilteredExpense(vector<ExpenseClass*>& department_ExpenseVector);
 bool isInDateRange(ExpenseClass* expense, int starting_month, int starting_day, int starting_year, int end_month, int end_day, int end_year);
 void renameProject(DepartmentProject*& departmentProject, vector<DepartmentProject*> department_ProjectVector);
-
 
 void pause();
 
